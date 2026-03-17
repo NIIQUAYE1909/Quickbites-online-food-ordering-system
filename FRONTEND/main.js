@@ -674,7 +674,8 @@ function formatCard(input) {
   input.value = v.replace(/(.{4})/g, '$1 ').trim();
 }
 
-const API_BASE = 'http://localhost:8080/api';
+// API Base URL - uses environment variable or defaults to localhost
+const API_BASE = window.env && window.env.API_URL ? window.env.API_URL : 'http://localhost:8080/api';
 
 async function placeOrder() {
   // Validate fields

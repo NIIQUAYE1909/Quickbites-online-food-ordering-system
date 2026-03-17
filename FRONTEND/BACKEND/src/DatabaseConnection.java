@@ -22,12 +22,20 @@ public class DatabaseConnection {
     // ---- CONNECT TO DATABASE ----
     public void connect() {
         try {
-            // Load credentials from config.properties file (like .env)
+            // First try to load from config.properties file
             Properties props = loadConfig();
-
-            String url      = props.getProperty("db.url");      // e.g. jdbc:mysql://localhost:3306/quickbite
-            String user     = props.getProperty("db.user");     // e.g. root
-            String password = props.getProperty("db.password"); // e.g. (empty for XAMPP)
+            
+            // Then check for environment variables (for production deployment)
+            String url = System.getProperty("db.url") != null ? System.getProperty("db.url") : props.getProperty("db.url");
+            String user = System.getProperty("db.user") != null ? System.getProperty("db.user") : props.getProperty("db.user");
+            String password = System.getProperty("db.password") != null ? System.getProperty("db.password") : props.getProperty("db.password");
+            
+            // Fallback to environment variables (Render uses these)
+            if (url == null || url.isEmpty()) {
+                url = System.getenv("db.url");
+                user = System.getenv("db.user");
+                password = System.getenv("db.password");
+            }
 
             // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");

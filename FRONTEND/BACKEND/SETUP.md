@@ -245,3 +245,55 @@ cd "c:\Users\HP\Downloads\FOOD ORDERING SYSTEM\FRONTEND\BACKEND" && java -cp "sr
 ---
 
 *QuickBite · Sekondi-Takoradi, Ghana 🇬🇭 · quayen010@gmail.com*
+
+---
+
+## 🚀 Deploying to Production (Render/Railway)
+
+### Option 1: Deploy Backend on Render (Free)
+
+1. **Create a Render account:** https://render.com/
+2. **Create a new Web Service:**
+   - Connect your GitHub repository
+   - Build command: (leave empty - Java doesn't need build)
+   - Start command: `java -cp "src:lib/mysql-connector-j-9.6.0.jar:." Main`
+3. **Add Environment Variables:**
+   - Go to the "Environment" tab
+   - Add these variables:
+     - `db.url` = `jdbc:mysql://your-mysql-host:3306/quickbite`
+     - `db.user` = `your-db-username`
+     - `db.password` = `your-db-password`
+4. **Deploy!** Render will give you a URL like `https://your-app.onrender.com`
+
+### Option 2: Deploy Database on Render (Free MySQL)
+
+1. In Render dashboard, click "New" → "PostgreSQL" or use a MySQL add-on
+2. Get the connection string from the dashboard
+3. Use that in your backend environment variables
+
+### Option 3: Frontend Hosting
+
+**Deploy Frontend on GitHub Pages (Free):**
+1. Go to your GitHub repository
+2. Settings → Pages
+3. Select "main" branch and `/ (root)` folder
+4. Save! Your site will be at `https://yourusername.github.io/Quickbites-online-food-ordering-system/`
+
+**Update API URL:**
+1. Edit `FRONTEND/env.js`
+2. Change `API_URL` to your Render backend URL:
+   ```js
+   API_URL: 'https://your-backend.onrender.com/api'
+   ```
+
+---
+
+## 📝 Quick Deploy Checklist
+
+- [ ] Push code to GitHub
+- [ ] Create Render account
+- [ ] Deploy MySQL database on Render
+- [ ] Deploy Java backend on Render with DB credentials
+- [ ] Update `FRONTEND/env.js` with your backend URL
+- [ ] Deploy frontend on GitHub Pages or Netlify
+- [ ] Test your live app!

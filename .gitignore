@@ -1,5 +1,6 @@
 # Config files (may contain sensitive data)
 config.properties
+env.js
 *.properties
 
 # Compiled Java class files
