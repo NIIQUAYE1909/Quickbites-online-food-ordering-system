@@ -3,6 +3,6 @@
 
 window.env = {
     // API URL - use localhost for local development
-    // For production: 'https://your-backend-name.onrender.com/api'
+    // For production on Render: 'https://quickbite-backend.onrender.com/api'
     API_URL: 'http://localhost:8080/api'
 };

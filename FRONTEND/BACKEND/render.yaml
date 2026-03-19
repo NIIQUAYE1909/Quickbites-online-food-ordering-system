@@ -28,7 +28,6 @@ services:
         value: 8080
       - key: DB_URL
         # This will be set by the database connection below
-        # Render automatically provides DATABASE_URL for MySQL
         fromDatabase:
           name: quickbite-db
           property: mysql_url
@@ -43,9 +42,6 @@ services:
     
     # Health check - Render will check this endpoint
     healthCheckPath: /api/health
-    
-    # Disconnected pull (if you don't want auto-deploy)
-    # pullRequestPreviewsEnabled: false
 
   # =============================================
   # MySQL Database
@@ -54,17 +50,17 @@ services:
     name: quickbite-db
     plan: free
     mysqlVersion: "8.0"
-    # The database will be created automatically
-    # Connection info is passed to the backend via env vars
 
   # =============================================
-  # Static Frontend (Optional - Serve from same domain)
+  # Frontend Static Site
   # =============================================
-  # Note: For simplicity, you can also host the frontend 
-  # separately on Render as a static site, or use 
-  # the backend to serve static files.
-  # 
-  # To serve frontend from backend:
-  # 1. Build the frontend (or use index.html as-is)
-  # 2. The frontend at FRONTEND/index.html makes API calls 
-  #    to the backend URL
+  - type: static
+    name: quickbite-frontend
+    plan: free
+    autoDeploy: true
+    buildCommand: # No build needed - using vanilla HTML/CSS/JS
+    publishDir: FRONTEND
+    # Environment variables for frontend
+    envVars:
+      - key: API_URL
+        value: https://quickbite-backend.onrender.com/api
